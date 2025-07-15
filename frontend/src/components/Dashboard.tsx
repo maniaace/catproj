@@ -53,7 +53,6 @@ interface DashboardStats {
   highCriticalVulns: number;
   exploitableVulns: number;
   activeScans: number;
-  applications: number;
   recentScans: any[];
   recentVulns: any[];
   apps: any[];
@@ -89,7 +88,6 @@ const Dashboard: React.FC = () => {
     highCriticalVulns: 0,
     exploitableVulns: 0,
     activeScans: 0,
-    applications: 0,
     recentScans: [],
     recentVulns: [],
     apps: [],
