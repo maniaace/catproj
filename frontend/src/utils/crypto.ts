@@ -65,9 +65,12 @@ class FrontendCrypto {
       );
 
       // Convert to base64 for storage
-      const encryptedData = btoa(String.fromCharCode(...new Uint8Array(encryptedBytes)));
-      const ivBase64 = btoa(String.fromCharCode(...iv));
-      const saltBase64 = btoa(String.fromCharCode(...salt));
+      const encryptedArray = Array.from(new Uint8Array(encryptedBytes));
+      const encryptedData = btoa(String.fromCharCode.apply(null, encryptedArray as any));
+      const ivArray = Array.from(iv);
+      const ivBase64 = btoa(String.fromCharCode.apply(null, ivArray as any));
+      const saltArray = Array.from(salt);
+      const saltBase64 = btoa(String.fromCharCode.apply(null, saltArray as any));
 
       return {
         data: encryptedData,
@@ -137,7 +140,8 @@ class FrontendCrypto {
     const encoder = new TextEncoder();
     const dataBytes = encoder.encode(data);
     const hashBytes = await window.crypto.subtle.digest('SHA-256', dataBytes);
-    return btoa(String.fromCharCode(...new Uint8Array(hashBytes)));
+    const hashArray = Array.from(new Uint8Array(hashBytes));
+    return btoa(String.fromCharCode.apply(null, hashArray as any));
   }
 }
 
