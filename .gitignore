@@ -10,6 +10,12 @@ backend/.env.development.local
 backend/.env.test.local
 backend/.env.production.local
 
+# Encrypted configuration files
+*.encrypted
+backend/*.encrypted
+.env.encrypted
+backend/.env.encrypted
+
 # Python
 __pycache__/
 *.py[cod]
