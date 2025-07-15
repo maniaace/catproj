@@ -8,14 +8,57 @@ import Dashboard from './components/Dashboard';
 import Assets from './components/Assets';
 import Teams from './components/Teams';
 import Vulnerabilities from './components/Vulnerabilities';
+import Scanning from './components/Scanning';
+import InsightVM from './components/InsightVM';
+import Reports from './components/Reports';
+import Users from './components/Users';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#00A651', // Safaricom Green
+      dark: '#008A44',
+      light: '#33B96C',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#E60000', // Safaricom Red
+      dark: '#CC0000',
+      light: '#FF3333',
+    },
+    background: {
+      default: '#F5F5F5',
+      paper: '#FFFFFF',
+    },
+    text: {
+      primary: '#000000',
+      secondary: '#666666',
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontWeight: 600,
+      color: '#000000',
+    },
+    h2: {
+      fontWeight: 500,
+      color: '#000000',
+    },
+    h3: {
+      fontWeight: 500,
+      color: '#000000',
+    },
+    h4: {
+      fontWeight: 500,
+      color: '#000000',
+    },
+    h5: {
+      fontWeight: 500,
+      color: '#000000',
+    },
+    h6: {
+      fontWeight: 500,
+      color: '#000000',
     },
   },
 });
@@ -68,6 +111,38 @@ const AppRoutes: React.FC = () => {
         element={
           <ProtectedRoute>
             <Vulnerabilities />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/scanning"
+        element={
+          <ProtectedRoute>
+            <Scanning />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/insightvm"
+        element={
+          <ProtectedRoute>
+            <InsightVM />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/reports"
+        element={
+          <ProtectedRoute>
+            <Reports />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute>
+            <Users />
           </ProtectedRoute>
         }
       />

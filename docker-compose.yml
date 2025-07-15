@@ -18,6 +18,10 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql://admin:password123@postgres:5432/asset_inventory
+      # InsightVM API Configuration
+      RAPID7_INSIGHTVM_USERNAME: ${RAPID7_INSIGHTVM_USERNAME}
+      RAPID7_INSIGHTVM_PASSWORD: ${RAPID7_INSIGHTVM_PASSWORD}
+      # Legacy Rapid7 Configuration
       RAPID7_API_KEY: ${RAPID7_API_KEY}
       RAPID7_BASE_URL: ${RAPID7_BASE_URL}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}

@@ -2,7 +2,11 @@ export interface Team {
   id: number;
   name: string;
   description?: string;
+  parent_team_id?: number;
+  team_type: string; // main, sub, shared
   created_at: string;
+  parent_team?: Team;
+  sub_teams?: Team[];
 }
 
 export interface User {
@@ -22,12 +26,28 @@ export interface Asset {
   name: string;
   ip_address: string;
   os_version?: string;
+  public_facing: boolean;
   team_id: number;
   owner_id?: number;
+  last_reviewed_date?: string;
   created_at: string;
   updated_at?: string;
   team?: Team;
   owner?: User;
+  // Environment categorization
+  environment: string; // dev, uat, prod
+  criticality: string; // low, medium, high, critical
+  business_impact?: string;
+  asset_type?: string;
+  location?: string;
+  compliance_requirements?: string;
+}
+
+export interface AssetStats {
+  total: number;
+  by_environment: Record<string, number>;
+  by_criticality: Record<string, number>;
+  by_type: Record<string, number>;
 }
 
 export interface Service {
@@ -69,4 +89,55 @@ export interface Scan {
 export interface AuthToken {
   access_token: string;
   token_type: string;
+}
+
+export interface ScanEngine {
+  id: number;
+  name: string;
+  address: string;
+  port: number;
+  status: string;
+}
+
+export interface ScanTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  checks: any[];
+}
+
+export interface ScanResult {
+  id: number;
+  status: string;
+  engineId?: number;
+  startTime?: string;
+  endTime?: string;
+  vulnerabilities?: number;
+  assets?: number[];
+}
+
+export interface AssetGroup {
+  id: number;
+  name: string;
+  description?: string;
+  assetCount?: number;
+  searchCriteria?: any;
+}
+
+export interface VulnerabilityExploit {
+  id: number;
+  title: string;
+  description?: string;
+  link?: string;
+  source?: string;
+}
+
+export interface LogSearchResult {
+  events: any[];
+  statistics: {
+    count: number;
+    from: number;
+    to: number;
+  };
+  leql: string;
 }

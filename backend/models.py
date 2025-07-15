@@ -7,12 +7,19 @@ class Team(Base):
     __tablename__ = "teams"
     
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(100), unique=True, index=True, nullable=False)
+    name = Column(String(100), nullable=False, index=True)
     description = Column(Text)
+    parent_team_id = Column(Integer, ForeignKey("teams.id"), nullable=True)
+    team_type = Column(String(20), default="main")  # main, sub, shared
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
+    # Relationships
     assets = relationship("Asset", back_populates="team")
     users = relationship("User", back_populates="team")
+    
+    # Self-referential relationship for parent/child teams
+    parent_team = relationship("Team", remote_side=[id], back_populates="sub_teams")
+    sub_teams = relationship("Team", back_populates="parent_team")
 
 class User(Base):
     __tablename__ = "users"
@@ -37,8 +44,21 @@ class Asset(Base):
     name = Column(String(100), nullable=False, index=True)
     ip_address = Column(String(45), nullable=False, index=True)
     os_version = Column(String(100))
+    public_facing = Column(Boolean, default=False, nullable=False)
     team_id = Column(Integer, ForeignKey("teams.id"), nullable=False)
     owner_id = Column(Integer, ForeignKey("users.id"))
+    last_reviewed_date = Column(DateTime(timezone=True))
+    
+    # Environment categorization
+    environment = Column(String(20), default="dev", nullable=False)  # dev, uat, prod
+    criticality = Column(String(20), default="medium", nullable=False)  # low, medium, high, critical
+    business_impact = Column(String(50))  # Description of business impact
+    
+    # Additional asset metadata
+    asset_type = Column(String(50))  # server, database, application, network_device, etc.
+    location = Column(String(100))  # Physical or logical location
+    compliance_requirements = Column(Text)  # JSON array of compliance requirements
+    
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
